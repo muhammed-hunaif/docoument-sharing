@@ -22,17 +22,17 @@ export default function Login() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        
+
         const newErrors = { email: "", password: "" };
         let hasError = false;
         if (!form.email) { newErrors.email = "Please fill out this field."; hasError = true; }
         if (!form.password) { newErrors.password = "Please fill out this field."; hasError = true; }
-        
+
         if (hasError) {
             setErrors(newErrors);
             return;
         }
-        
+
         setErrors({ email: "", password: "" });
         setLoading(true);
         try {
@@ -52,7 +52,7 @@ export default function Login() {
     return (
         <>
             {toast && (
-                <div className="fixed top-21 right-4 w-auto z-[200] flex items-center gap-2 bg-slate-900 text-white px-3 py-2 sm:px-5 sm:py-3 rounded-xl shadow-2xl shadow-slate-900/30 font-bold text-[11px] sm:text-sm" style={{ animation: "slideDown 0.3s cubic-bezier(0.16,1,0.3,1)" }}>
+                <div className="fixed top-24 right-5 w-auto z-[200] flex items-center gap-2 bg-slate-900 text-white px-3 py-2 sm:px-5 sm:py-3 rounded-xl shadow-2xl shadow-slate-900/30 font-bold text-[11px] sm:text-sm" style={{ animation: "slideDown 0.3s cubic-bezier(0.16,1,0.3,1)" }}>
                     <div className={`w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center shrink-0 ${toast.ok ? "bg-emerald-500" : "bg-red-500"}`}>
                         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                             {toast.ok ? <path d="M20 6L9 17l-5-5" /> : <path d="M18 6L6 18M6 6l12 12" />}
@@ -116,7 +116,7 @@ export default function Login() {
                                     placeholder="name@company.com"
                                     type="email"
                                     error={errors.email}
-                                    onChange={(e) => { setForm({ ...form, email: e.target.value }); setErrors({...errors, email: ""}); }}
+                                    onChange={(e) => { setForm({ ...form, email: e.target.value }); setErrors({ ...errors, email: "" }); }}
                                 />
                                 <div className="flex flex-col gap-2">
                                     <Input
@@ -124,7 +124,7 @@ export default function Login() {
                                         type="password"
                                         placeholder="••••••••"
                                         error={errors.password}
-                                        onChange={(e) => { setForm({ ...form, password: e.target.value }); setErrors({...errors, password: ""}); }}
+                                        onChange={(e) => { setForm({ ...form, password: e.target.value }); setErrors({ ...errors, password: "" }); }}
                                     />
                                     <div className="flex justify-end">
                                         <button type="button" className="text-xs font-bold text-indigo-600 hover:text-indigo-800 transition-colors">Forgot password?</button>

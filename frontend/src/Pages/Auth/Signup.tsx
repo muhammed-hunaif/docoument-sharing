@@ -54,7 +54,7 @@ export default function Signup() {
     return (
         <>
             {toast && (
-                <div className="fixed top-12 right-5 w-auto z-[200] flex items-center gap-2 bg-slate-900 text-white px-3 py-2 sm:px-5 sm:py-3 rounded-xl shadow-2xl shadow-slate-900/30 font-bold text-[11px] sm:text-sm" style={{ animation: "slideDown 0.3s cubic-bezier(0.16,1,0.3,1)" }}>
+                <div className="fixed top-24 right-5 w-auto z-[200] flex items-center gap-2 bg-slate-900 text-white px-3 py-2 sm:px-5 sm:py-3 rounded-xl shadow-2xl shadow-slate-900/30 font-bold text-[11px] sm:text-sm" style={{ animation: "slideDown 0.3s cubic-bezier(0.16,1,0.3,1)" }}>
                     <div className={`w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center shrink-0 ${toast.ok ? "bg-emerald-500" : "bg-red-500"}`}>
                         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                             {toast.ok ? <path d="M20 6L9 17l-5-5" /> : <path d="M18 6L6 18M6 6l12 12" />}
