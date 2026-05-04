@@ -27,31 +27,30 @@ CREATE TABLE IF NOT EXISTS files (
 
 console.log("Starting database setup...");
 
-db.connect((err) => {
+(db as any).connect((err: any) => {
   if (err) {
-    console.error("Connection failed:", err.message);
-    process.exit(1);
+    console.error("Connection failed:", err.message || err);
+    return;
   }
 
   console.log("Connected to Aiven MySQL.");
 
-  db.query(createUsersTable, (err) => {
+  (db as any).query(createUsersTable, (err: any) => {
     if (err) {
-      console.error("Error creating users table:", err.message);
+      console.error("Error creating users table:", err.message || err);
     } else {
       console.log("✅ Users table ready.");
     }
 
-    db.query(createFilesTable, (err) => {
+    (db as any).query(createFilesTable, (err: any) => {
       if (err) {
-        console.error("Error creating files table:", err.message);
+        console.error("Error creating files table:", err.message || err);
       } else {
         console.log("✅ Files table ready.");
       }
       
       console.log("Database setup complete!");
       db.end();
-      process.exit(0);
     });
   });
 });
