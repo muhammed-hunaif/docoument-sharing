@@ -13,7 +13,10 @@ export const signup = async (req: Request, res: Response) => {
   const sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
 
   db.query(sql, [name, email, hashedPassword], (err) => {
-    if (err) return res.status(500).json(err);
+    if (err) {
+      console.error("Signup Error:", err);
+      return res.status(500).json({ message: "Database error during signup", error: err.message });
+    }
 
     res.json({ message: "User registered successfully" });
   });
@@ -26,7 +29,10 @@ export const login = (req: Request, res: Response) => {
   const sql = "SELECT * FROM users WHERE email = ?";
 
   db.query(sql, [email], async (err, results: any) => {
-    if (err) return res.status(500).json(err);
+    if (err) {
+      console.error("Login Error:", err);
+      return res.status(500).json({ message: "Database error during login", error: err.message });
+    }
 
     if (results.length === 0)
       return res.status(404).json({ message: "User not found" });
