@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { useFiles } from "../../hooks/useFiles";
 import { UploadZone } from "../../Components/UploadZone";
 import { FileCard } from "./Components/FileCard";
+import { ConfirmModal } from "../../Components/UI/ConfirmModal";
 
 export default function Dashboard() {
+  const [deleteFileId, setDeleteFileId] = useState<number | null>(null);
   const {
     files,
     uploading,
@@ -56,13 +59,22 @@ export default function Dashboard() {
               <FileCard
                 key={file.id}
                 file={file}
-                onDelete={handleDelete}
+                onDelete={(id) => setDeleteFileId(id)}
                 onShare={handleShare}
               />
             ))}
           </div>
         </div>
       )}
+
+      {/* Confirmation Modal */}
+      <ConfirmModal
+        isOpen={deleteFileId !== null}
+        onClose={() => setDeleteFileId(null)}
+        onConfirm={() => deleteFileId && handleDelete(deleteFileId)}
+        title="Delete Document?"
+        message="This action cannot be undone. The file will be permanently removed from the cloud."
+      />
 
       {/* Empty State */}
       {files.length === 0 && !uploading && (
