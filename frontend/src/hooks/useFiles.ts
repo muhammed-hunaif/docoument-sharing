@@ -66,7 +66,6 @@ export const useFiles = () => {
   };
 
   const handleDelete = async (id: number) => {
-    if (!confirm("Delete this file?")) return;
     try {
       await api.delete(`/files/${id}`);
       fetchFiles();
