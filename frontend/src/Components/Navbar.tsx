@@ -43,7 +43,7 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-14 sm:h-16">
 
             {/* ── Logo ── */}
-            <Link to="/" className="flex items-center gap-2.5 group">
+            <div className="flex items-center gap-2.5 group cursor-default">
               <div className="relative w-8 h-8 sm:w-9 sm:h-9 shrink-0">
                 {/* Glow ring */}
                 <div className="absolute inset-0 bg-indigo-600 rounded-xl opacity-0 group-hover:opacity-20 blur-md transition-opacity duration-300" />
@@ -56,7 +56,7 @@ export default function Navbar() {
               <span className="font-black text-lg sm:text-xl tracking-tighter text-slate-900 select-none">
                 Doc<span className="text-indigo-600">Share</span>
               </span>
-            </Link>
+            </div>
 
             {/* ── Right actions ── */}
             <div className="flex items-center gap-1.5 sm:gap-3">
