@@ -3,29 +3,25 @@ import { db } from "../db";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-
 // SignUp:
 export const signup = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
 
   const hashedPassword = await bcrypt.hash(password, 10);
-
   const sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
-
+  
   db.query(sql, [name, email, hashedPassword], (err) => {
     if (err) {
       console.error("Signup Error:", err);
       return res.status(500).json({ message: "Database error during signup", error: err.message });
     }
-
     res.json({ message: "User registered successfully" });
   });
 };
 
-// login:
+// Login:
 export const login = (req: Request, res: Response) => {
   const { email, password } = req.body;
-
   const sql = "SELECT * FROM users WHERE email = ?";
 
   db.query(sql, [email], async (err, results: any) => {
@@ -38,7 +34,6 @@ export const login = (req: Request, res: Response) => {
       return res.status(404).json({ message: "User not found" });
 
     const user = results[0];
-
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch)

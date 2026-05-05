@@ -1,6 +1,6 @@
 import mysql from "mysql2";
 
-export const db = mysql.createConnection({
+export const db = mysql.createPool({
   host: process.env.DB_HOST || "localhost",
   port: Number(process.env.DB_PORT) || 3306,
   user: process.env.DB_USER || "root",
@@ -9,12 +9,9 @@ export const db = mysql.createConnection({
   ssl: process.env.DB_HOST && process.env.DB_HOST !== "localhost"
     ? { rejectUnauthorized: false }
     : undefined,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
 });
 
-db.connect((err: any) => {
-  if (err) {
-    console.error("❌ Database connection failed:", err.message || err);
-  } else {
-    console.log("✅ Connected to the database.");
-  }
-});
+console.log("✅ Database Pool initialized.");
