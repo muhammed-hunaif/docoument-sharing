@@ -1,12 +1,18 @@
 import cron from "node-cron";
 import { db } from "../db";
-import imagekit from "../config/imagekit";
+import imagekit, { isImageKitConfigured } from "../config/imagekit";
 
 // Run every hour to clean up expired files
 export const initCronJob = () => {
     cron.schedule("0 * * * *", () => {
         console.log("Running cron job to clean up expired files...");
-        
+
+        if (!isImageKitConfigured() || !imagekit) {
+            console.log("ImageKit not configured, skipping cron cleanup.");
+            return;
+        }
+
+        const imagekitClient = imagekit;
         const selectSql = "SELECT id, imagekit_id FROM files WHERE expires_at < NOW()";
         
         db.query(selectSql, (err, results: any[]) => {
@@ -23,7 +29,7 @@ export const initCronJob = () => {
             results.forEach((file) => {
                 // 1. Delete from ImageKit if imagekit_id exists
                 if (file.imagekit_id) {
-                    imagekit.deleteFile(file.imagekit_id, (error) => {
+                    imagekitClient.deleteFile(file.imagekit_id, (error) => {
                         if (error) {
                             console.error(`Failed to delete file ${file.imagekit_id} from ImageKit:`, error);
                         } else {

@@ -2,12 +2,19 @@ import { Response } from "express";
 import { AuthRequest } from "../middleware/authMiddleware";
 import { db } from "../db";
 import crypto from "crypto";
-import imagekit from "../config/imagekit";
+import imagekit, { isImageKitConfigured } from "../config/imagekit";
 
 //PUT: /api/files/upload
 export const uploadFile = (req: AuthRequest, res: Response): void => {
   if (!req.file) {
     res.status(400).json({ message: "No file uploaded" });
+    return;
+  }
+
+  if (!isImageKitConfigured() || !imagekit) {
+    res.status(503).json({
+      message: "ImageKit is not configured. Add IMAGEKIT_PUBLIC_KEY, IMAGEKIT_PRIVATE_KEY, and IMAGEKIT_URL_ENDPOINT to your backend .env file.",
+    });
     return;
   }
 
